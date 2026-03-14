@@ -165,13 +165,13 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
     const BOARD_SIZE = 400;
     const cellSize = BOARD_SIZE / level.cols;
 
-    const maxW = winSize.w * 0.95;
+    const maxW = winSize.w * 0.88;
     const maxH = winSize.h * 0.5;
     const scale = Math.min(maxW / BOARD_SIZE, maxH / BOARD_SIZE, 1);
 
     const WIN_TITLES = [
-        "PERFECT!", "AWESOME!", "BRILLIANT!", "UNSTOPPABLE!", 
-        "MASTERMIND!", "SMOOTH!", "INCREDIBLE!", "ZEN MASTER!", 
+        "PERFECT!", "AWESOME!", "BRILLIANT!", "UNSTOPPABLE!",
+        "MASTERMIND!", "SMOOTH!", "INCREDIBLE!", "ZEN MASTER!",
         "GENIUS!", "LOGIC BOSS!", "FANTASTIC!", "SUPERB!",
         "ELITE!", "CHAMPION!", "LEGENDARY!"
     ];
@@ -187,14 +187,14 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
                     </button>
-                    
+
                     <div className="game-stats">
                         {level.name} &nbsp;·&nbsp; MOVES: {moves}
                     </div>
 
                     <button className="control-btn" onClick={() => reset()} title="Reset">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
-                            <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                            <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16" />
                         </svg>
                     </button>
                 </div>
@@ -268,11 +268,11 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
                             </div>
                             <div className="win-actions-vertical">
                                 {levelIdx < LEVELS.length - 1 && (
-                                    <button 
+                                    <button
                                         onClick={() => {
                                             if (onWin) onWin(levelIdx); // Unlock when moving forward
                                             setLevelIdx(i => i + 1);
-                                        }} 
+                                        }}
                                         className="btn-action-main"
                                     >
                                         NEXT SLIDE
@@ -280,11 +280,11 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
                                 )}
                                 <div className="win-actions-row">
                                     <button onClick={() => reset()} className="btn-action-sub">RETRY</button>
-                                    <button 
+                                    <button
                                         onClick={() => {
                                             if (onWin) onWin(levelIdx); // Also unlock if going to menu after win
                                             onBackToLevels();
-                                        }} 
+                                        }}
                                         className="btn-action-sub"
                                     >
                                         MENU

@@ -333,6 +333,7 @@
     background: var(--ink);
     border-radius: 50%;
     top: 28%;
+    animation: character-look 4s ease-in-out infinite;
 }
 
 .eye-left  { left: 18%; }
@@ -356,6 +357,19 @@
     height: 16%;
     background: var(--ink);
     border-radius: 0 0 8px 8px;
+    animation: character-smile 4s ease-in-out infinite;
+}
+
+@keyframes character-look {
+    0%, 10%, 90%, 100% { transform: scaleY(1) translateX(0); }
+    45% { transform: scaleY(1) translateX(1.5px); }
+    50% { transform: scaleY(0.1) translateX(0); }
+    55% { transform: scaleY(1) translateX(-1.5px); }
+}
+
+@keyframes character-smile {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(1.15); }
 }
 
 /* ─── Win Overlay ────────────────────────────────────────────── */
@@ -678,6 +692,10 @@
 }
 
 @media (max-width: 480px) {
+    .game-container {
+        padding: 10px 25px;
+    }
+
     .header-controls {
         gap: 12px;
         padding: 5px 15px;
