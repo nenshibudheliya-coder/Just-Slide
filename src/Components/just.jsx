@@ -169,6 +169,14 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
     const maxH = winSize.h * 0.5;
     const scale = Math.min(maxW / BOARD_SIZE, maxH / BOARD_SIZE, 1);
 
+    const WIN_TITLES = [
+        "PERFECT!", "AWESOME!", "BRILLIANT!", "UNSTOPPABLE!", 
+        "MASTERMIND!", "SMOOTH!", "INCREDIBLE!", "ZEN MASTER!", 
+        "GENIUS!", "LOGIC BOSS!", "FANTASTIC!", "SUPERB!",
+        "ELITE!", "CHAMPION!", "LEGENDARY!"
+    ];
+    const winTitle = WIN_TITLES[levelIdx % WIN_TITLES.length];
+
     return (
         <div className="game-container">
             <div className="game-header" style={{ transform: winSize.w < 500 ? "scale(0.85)" : "scale(1)" }}>
@@ -249,7 +257,11 @@ export default function JustSlide({ initialLevelIdx = 0, onBackToLevels, onWin }
                             </div>
                         </div>
                         <div className="win-content">
-                            <h2 className="win-title">PERFECT!</h2>
+                            <h2 className="win-title">
+                                {winTitle.split('').map((char, i) => (
+                                    <span key={i} style={{ animationDelay: `${i * 0.1}s` }}>{char}</span>
+                                ))}
+                            </h2>
                             <p className="win-subtitle">Level {levelIdx + 1} Cleared</p>
                             <div className="win-meta">
                                 <span>{moves} MOVES</span>

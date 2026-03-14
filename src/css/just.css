@@ -484,13 +484,32 @@
 /* ─── Win Typography ─────────────────────────────────────────── */
 .win-title {
     font-family: 'Unbounded', sans-serif;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 900;
-    color: var(--orange);
     margin: 0 0 4px;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+}
+
+.win-title span {
+    display: inline-block;
     -webkit-text-stroke: 2px var(--ink);
-    text-shadow: 3px 4px 0px var(--ink), 3px 5px 0px rgba(26,15,0,0.2);
+    text-shadow: 4px 5px 0px var(--ink);
+    animation: win-letter-bounce 1.5s ease-in-out infinite;
+}
+
+/* Color cycling like the home page but for any win word */
+.win-title span:nth-child(5n+1) { color: var(--orange); }
+.win-title span:nth-child(5n+2) { color: var(--lime); }
+.win-title span:nth-child(5n+3) { color: var(--rose); }
+.win-title span:nth-child(5n+4) { color: var(--sky); }
+.win-title span:nth-child(5n+5) { color: var(--violet); }
+
+@keyframes win-letter-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px) rotate(3deg); }
 }
 
 .win-subtitle {
