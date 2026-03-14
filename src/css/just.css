@@ -1,0 +1,699 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@600;700;800&display=swap');
+
+/* ─── Design: "GLAZED ARCADE — GAME SCREEN" ──────────────────────
+   Same Molten Candy world · ceramic game board · candy character
+   Win tray = cream card with hard ink shadow & gloss buttons
+──────────────────────────────────────────────────────────────── */
+
+:root {
+    --cream:         #fdf6ec;
+    --cream-deep:    #f0e0c4;
+    --ink:           #1a0f00;
+    --orange:        #ff5c1a;
+    --orange-dark:   #c43800;
+    --lime:          #b8f000;
+    --lime-dark:     #7aaa00;
+    --rose:          #ff3d7f;
+    --rose-dark:     #c4005a;
+    --sky:           #00c3f0;
+    --sky-dark:      #0090b8;
+    --violet:        #8b5cf6;
+    --gold:          #ffbe00;
+    --gold-dark:     #c48a00;
+    --board-bg:      #fff8ee;
+    --wall-color:    #1a0f00;
+    --primary:       #ff5c1a;
+    --btn-radius:    18px;
+}
+
+/* ─── Game Container ─────────────────────────────────────────── */
+.game-container {
+    height: 100vh;
+    background-color: var(--cream);
+    background-image:
+        radial-gradient(ellipse 120% 55% at 50% -5%,  #ffe0b2 0%, transparent 58%),
+        radial-gradient(ellipse 55%  40% at  5% 95%,  #ffd6e8 0%, transparent 52%),
+        radial-gradient(ellipse 50%  40% at 95% 92%,  #d4f5a0 0%, transparent 52%),
+        radial-gradient(ellipse 45%  32% at 88% 5%,   #c8f0ff 0%, transparent 48%);
+    animation: game-bg-breathe 18s ease-in-out infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    user-select: none;
+    padding: 10px 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+    touch-action: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+}
+
+/* Grain overlay */
+.game-container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.022;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    z-index: 0;
+}
+
+/* Bottom-right blob */
+.game-container::after {
+    content: '';
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 60% 40% 68% 32% / 46% 54% 46% 54%;
+    background: linear-gradient(135deg, rgba(255,92,26,0.09), rgba(184,240,0,0.08));
+    bottom: -70px; right: -70px;
+    animation: blob-game 16s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes game-bg-breathe {
+    0%   { background-size: 100% 100%; }
+    100% { background-size: 116% 116%; }
+}
+
+@keyframes blob-game {
+    0%   { transform: translate(0,0) rotate(0deg); }
+    100% { transform: translate(-30px,-20px) rotate(28deg); }
+}
+
+/* ─── Header Controls ────────────────────────────────────────── */
+.header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 25px;
+    margin-top: 44px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Game Stats ─────────────────────────────────────────────── */
+.game-stats {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: 3px;
+    min-width: 160px;
+    text-align: center;
+    /* Ink stamp look */
+    -webkit-text-stroke: 1px var(--ink);
+    text-shadow: 2px 3px 0 rgba(26,15,0,0.18);
+    -webkit-text-fill-color: var(--orange);
+}
+
+/* ─── Control Buttons ────────────────────────────────────────── */
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 3px solid var(--ink);
+    color: var(--ink) !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 4px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    position: relative;
+    padding: 0;
+}
+
+.control-btn svg {
+    color: var(--ink) !important;
+    stroke: var(--ink) !important;
+}
+
+/* Gloss strip */
+.control-btn::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 7px;
+    width: 60%; height: 8px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.5);
+    pointer-events: none;
+}
+
+.control-btn:hover {
+    transform: translate(-1px, -2px);
+    box-shadow: 4px 6px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.control-btn:active {
+    transform: translate(3px, 4px);
+    box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* ─── Levels Button ──────────────────────────────────────────── */
+.levels-btn {
+    margin-top: 10px;
+    padding: 8px 22px;
+    border-radius: 99px;
+    border: 3px solid var(--ink);
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    box-shadow: 3px 4px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.8);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.levels-btn:hover {
+    background: var(--orange);
+    color: #fff;
+    transform: translate(-1px, -2px);
+    box-shadow: 4px 6px 0px var(--orange-dark), 4px 6px 0px 1px var(--ink);
+}
+
+.levels-btn:active {
+    transform: translate(3px, 4px);
+    box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* ─── Board Wrapper ──────────────────────────────────────────── */
+.board-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Game Board ─────────────────────────────────────────────── */
+.game-board {
+    position: relative;
+    transform-origin: center center;
+    background: var(--board-bg);
+    border-radius: 22px;
+    border: 4px solid var(--ink);
+    flex-shrink: 0;
+    overflow: hidden;
+
+    /* Hard shadow like all other candy surfaces */
+    box-shadow:
+        6px 8px 0px var(--ink),
+        0 20px 40px rgba(26,15,0,0.12),
+        inset 0 2px 0 rgba(255,255,255,0.7);
+}
+
+/* Inner gloss along the top edge */
+.game-board::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 16px;
+    right: 16px; height: 12px;
+    border-radius: 99px;
+    /* background: rgba(255,255,255,0.55); */
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* ─── Walls ──────────────────────────────────────────────────── */
+.cell-wall {
+    position: absolute;
+    background: var(--ink);
+    box-sizing: border-box;
+    z-index: 2;
+    border-radius: 2px;
+}
+
+.cell-wall-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: rgba(26,15,0,0.55);
+    border-radius: 0 0 2px 2px;
+}
+
+/* ─── Empty Cells ────────────────────────────────────────────── */
+.cell-empty {
+    position: absolute;
+    background: rgba(255, 248, 238, 0.6);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.cell-dot {
+    width: 28%;
+    height: 28%;
+    border-radius: 50%;
+    background: rgba(26,15,0,0.06);
+    border: 1.5px solid rgba(26,15,0,0.08);
+}
+
+/* ─── Filled Cells ───────────────────────────────────────────── */
+.cell-filled {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.fill-overlay {
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: var(--sky);
+    box-sizing: border-box;
+    border-radius: 3px;
+
+    /* Gloss sheen on fills */
+    box-shadow: inset 0 3px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.08);
+}
+
+/* ─── Character Unit — Candy Blob ────────────────────────────── */
+.character-unit {
+    position: absolute;
+    z-index: 10;
+    transition: left 0.1s linear, top 0.1s linear;
+
+    background: linear-gradient(145deg, #ff7a40, var(--orange));
+    border-radius: 50% 50% 45% 45%;
+    border: 3px solid var(--ink);
+    box-shadow:
+        2px 4px 0px var(--orange-dark),
+        2px 4px 0px 1px var(--ink),
+        inset 0 3px 0 rgba(255,255,255,0.4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Gloss on character */
+.character-unit::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 6px;
+    width: 50%; height: 25%;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.45);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.character-face {
+    width: 70%;
+    height: 60%;
+    position: relative;
+    top: 1px;
+    z-index: 1;
+}
+
+.eye {
+    position: absolute;
+    width: 13%;
+    height: 22%;
+    background: var(--ink);
+    border-radius: 50%;
+    top: 28%;
+}
+
+.eye-left  { left: 18%; }
+.eye-right { right: 18%; }
+
+/* Eye shine */
+.eye::after {
+    content: '';
+    position: absolute;
+    top: 2px; right: 1px;
+    width: 3px; height: 3px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+}
+
+.mouth {
+    position: absolute;
+    left: 38%;
+    top: 62%;
+    width: 24%;
+    height: 16%;
+    background: var(--ink);
+    border-radius: 0 0 8px 8px;
+}
+
+/* ─── Win Overlay ────────────────────────────────────────────── */
+.win-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(253,246,236,0.65);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.25s ease;
+}
+
+/* ─── Win Tray — Cream Card with Hard Shadow ─────────────────── */
+.win-tray {
+    background: var(--cream);
+    width: 320px;
+    border-radius: 32px;
+    padding: 32px 28px 28px;
+    text-align: center;
+    border: 4px solid var(--ink);
+    position: relative;
+    animation: tray-bounce-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Signature hard candy shadow */
+    box-shadow:
+        8px 10px 0px var(--ink),
+        0 30px 60px rgba(26,15,0,0.15),
+        inset 0 2px 0 rgba(255,255,255,0.9);
+}
+
+/* Gloss strip on tray */
+.win-tray::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 24px;
+    right: 24px; height: 12px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.6);
+    pointer-events: none;
+}
+
+/* ─── Win Avatar ─────────────────────────────────────────────── */
+.win-avatar {
+    width: 84px;
+    height: 84px;
+    background: linear-gradient(145deg, #ff7a40, var(--orange));
+    border: 4px solid var(--ink);
+    border-radius: 50% 50% 45% 45%;
+    margin: -74px auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        4px 5px 0px var(--orange-dark),
+        4px 5px 0px 1px var(--ink),
+        inset 0 3px 0 rgba(255,255,255,0.4);
+
+    animation: avatar-bounce 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+/* Avatar gloss */
+.win-avatar::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 10px;
+    width: 48%; height: 22%;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.45);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.avatar-face {
+    width: 70%;
+    height: 60%;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    justify-content: center;
+    z-index: 1;
+}
+
+.avatar-eye {
+    width: 8px;
+    height: 8px;
+    background: var(--ink);
+    border-radius: 50%;
+    margin-top: 14px;
+    position: relative;
+    animation: eye-look 3s infinite ease-in-out;
+}
+
+/* Eye shine */
+.avatar-eye::after {
+    content: '';
+    position: absolute;
+    top: 1px; right: 1px;
+    width: 3px; height: 3px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+}
+
+@keyframes eye-look {
+    0%, 10%, 100% { transform: translateX(0) scaleY(1); }
+    30%            { transform: translateX(-3px) scaleY(1); }
+    50%            { transform: translateX(3px) scaleY(1); }
+    70%            { transform: translateX(0) scaleY(1); }
+    82%            { transform: scaleY(0.08); }
+    90%            { transform: scaleY(1); }
+}
+
+.avatar-mouth {
+    position: absolute;
+    bottom: 6px;
+    width: 18px; height: 9px;
+    border-bottom: 3px solid var(--ink);
+    border-radius: 0 0 50% 50%;
+}
+
+/* ─── Win Typography ─────────────────────────────────────────── */
+.win-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--orange);
+    margin: 0 0 4px;
+    letter-spacing: -1px;
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow: 3px 4px 0px var(--ink), 3px 5px 0px rgba(26,15,0,0.2);
+}
+
+.win-subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(26,15,0,0.45);
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+
+/* ─── Win Meta Badge ─────────────────────────────────────────── */
+.win-meta {
+    background: var(--cream-deep);
+    border: 2.5px solid var(--ink);
+    padding: 8px 20px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 24px;
+    box-shadow: 2px 3px 0px var(--ink);
+}
+
+.win-meta span {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    color: var(--ink);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+/* ─── Win Actions ────────────────────────────────────────────── */
+.win-actions-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Main action — Orange candy press */
+.btn-action-main {
+    background: var(--orange);
+    color: #fff;
+    border: 3px solid var(--ink);
+    padding: 14px;
+    border-radius: var(--btn-radius);
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        4px 5px 0px var(--orange-dark),
+        4px 5px 0px 1px var(--ink),
+        inset 0 2px 0 rgba(255,255,255,0.25);
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* Gloss on main btn */
+.btn-action-main::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 16px;
+    width: 50%; height: 9px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.28);
+    pointer-events: none;
+}
+
+.btn-action-main:hover {
+    transform: translate(-1px, -2px);
+    box-shadow: 5px 7px 0px var(--orange-dark), 5px 7px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.25);
+}
+
+.btn-action-main:active {
+    transform: translate(4px, 5px);
+    box-shadow: 0px 0px 0px var(--orange-dark), 0px 0px 0px 1px var(--ink);
+}
+
+/* Row of sub actions */
+.win-actions-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Sub action — White candy press */
+.btn-action-sub {
+    flex: 1;
+    background: #ffffff;
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 11px;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        3px 4px 0px rgba(26,15,0,0.35),
+        3px 4px 0px 0px var(--ink),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-action-sub::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 10px;
+    width: 55%; height: 7px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.6);
+    pointer-events: none;
+}
+
+.btn-action-sub:hover {
+    background: var(--cream-deep);
+    transform: translate(-1px, -2px);
+    box-shadow: 4px 6px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.btn-action-sub:active {
+    transform: translate(3px, 4px);
+    box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes tray-bounce-in {
+    0%   { transform: scale(0.4) rotate(-4deg); opacity: 0; }
+    60%  { transform: scale(1.06) rotate(1deg); opacity: 1; }
+    80%  { transform: scale(0.97) rotate(-0.5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes avatar-bounce {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    45%       { transform: translateY(-12px) rotate(2deg); }
+    65%       { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@media (max-width: 900px) {
+    .game-container {
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    .header-controls {
+        margin-top: 20px;
+        transform: scale(0.9);
+    }
+
+    .board-wrapper {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-controls {
+        gap: 12px;
+        padding: 5px 15px;
+        margin-top: 25px;
+    }
+
+    .game-stats {
+        font-size: 0.85rem;
+        min-width: 130px;
+        letter-spacing: 1px;
+    }
+
+    .control-btn {
+        width: 38px;
+        height: 38px;
+        border-width: 2.5px;
+    }
+
+    .board-wrapper {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .win-tray {
+        width: 280px;
+        padding: 25px 20px 20px;
+    }
+
+    .win-title {
+        font-size: 1.6rem;
+    }
+
+    .win-avatar {
+        width: 70px;
+        height: 70px;
+        margin-top: -60px;
+    }
+}

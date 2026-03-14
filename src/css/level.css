@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@600;700;800&display=swap');
+
+/* ─── Design: "GLAZED ARCADE" ─────────────────────────────────────
+   Molten Candy world · ceramic tile levels · ink-press buttons
+   Every level = a glossy candy tile you physically push down
+──────────────────────────────────────────────────────────────── */
+
+:root {
+    --cream:         #fdf6ec;
+    --cream-deep:    #f0e0c4;
+    --ink:           #1a0f00;
+    --orange:        #ff5c1a;
+    --orange-dark:   #c43800;
+    --lime:          #b8f000;
+    --lime-dark:     #7aaa00;
+    --rose:          #ff3d7f;
+    --rose-dark:     #c4005a;
+    --sky:           #00c3f0;
+    --sky-dark:      #0090b8;
+    --violet:        #8b5cf6;
+    --violet-dark:   #5b35c4;
+    --gold:          #ffbe00;
+    --gold-dark:     #c48a00;
+    --locked-bg:     #d9cfc3;
+    --locked-shadow: #a89d91;
+    --primary:       #ff5c1a;
+    --btn-radius:    18px;
+}
+
+/* ─── Overlay / Background ───────────────────────────────────── */
+.level-select-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--cream);
+    background-image:
+        radial-gradient(ellipse 130% 55% at 50% -5%,  #ffe0b2 0%, transparent 58%),
+        radial-gradient(ellipse 55%  45% at  5% 95%,  #ffd6e8 0%, transparent 52%),
+        radial-gradient(ellipse 50%  40% at 95% 90%,  #d4f5a0 0%, transparent 52%),
+        radial-gradient(ellipse 45%  35% at 85% 5%,   #c8f0ff 0%, transparent 48%);
+    animation: lvl-bg-breathe 18s ease-in-out infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: 'Nunito', sans-serif;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Noise grain */
+.level-select-overlay::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.022;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    z-index: 0;
+}
+
+/* Wandering blob */
+.level-select-overlay::after {
+    content: '';
+    position: fixed;
+    width: 380px;
+    height: 380px;
+    border-radius: 58% 42% 65% 35% / 48% 52% 48% 52%;
+    background: linear-gradient(135deg, rgba(255,92,26,0.10), rgba(184,240,0,0.08));
+    bottom: -80px;
+    right: -80px;
+    animation: blob-wander 16s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes lvl-bg-breathe {
+    0%   { background-size: 100% 100%; }
+    100% { background-size: 118% 118%; }
+}
+
+@keyframes blob-wander {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-35px, -25px) rotate(30deg); }
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.level-header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.25rem;
+}
+
+.level-header h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+
+    /* Same ink-stamp treatment as home title */
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow:
+        3px 4px 0px var(--ink),
+        3px 5px 0px rgba(26,15,0,0.2);
+
+    /* Paint the title in orange */
+    -webkit-text-fill-color: var(--orange);
+}
+
+/* ─── Grid Container ─────────────────────────────────────────── */
+.grid-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    z-index: 1;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(10px, 3vw, 16px);
+    padding: 8px;
+}
+
+@media (max-width: 480px) {
+    .level-header h1 {
+        font-size: 8vw;
+        letter-spacing: -1px;
+        margin-bottom: 1.2rem;
+        -webkit-text-stroke: 1.5px var(--ink);
+        text-shadow: 2.5px 3.5px 0px var(--ink);
+    }
+
+    .grid-container {
+        gap: 10px;
+    }
+
+    .levels-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 4px;
+    }
+    
+    .level-btn {
+        width: 19vw;
+        height: 19vw;
+        max-width: 70px;
+        max-height: 70px;
+    }
+
+    .arrow-btn { 
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .arrow-btn { display: none; }
+}
+
+@media (max-width: 360px) {
+    .levels-grid {
+        gap: 8px;
+    }
+    .level-btn {
+        width: 22vw;
+        height: 22vw;
+    }
+}
+
+/* ─── Landscape Mobile Responsive ─────────────────────────── */
+@media (max-height: 480px) and (orientation: landscape) {
+    .level-select-overlay {
+        padding: 15px 10px;
+        justify-content: flex-start; /* Title exactly at top */
+    }
+
+    .level-header h1 {
+        font-size: 6vh;
+        margin-bottom: 0.8rem;
+    }
+
+    .grid-container {
+        gap: 15px;
+        max-width: 85%;
+    }
+
+    .levels-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns as requested */
+        gap: 12px;
+        padding: 5px;
+    }
+
+    .level-btn {
+        width: 15vh; /* Larger size for 3x3 look */
+        height: 15vh;
+        max-width: 75px;
+        max-height: 75px;
+    }
+
+    .close-btn {
+        margin-top: 15px;
+        padding: 8px 30px;
+        font-size: 0.75rem;
+    }
+
+    .arrow-btn {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* ─── Level Button — Ceramic Candy Tile ──────────────────────── */
+.level-btn {
+    width: clamp(58px, 15vw, 76px);
+    height: clamp(58px, 15vw, 76px);
+    border-radius: var(--btn-radius);
+    background: var(--sky);
+    border: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+
+    /* Hard candy shadow */
+    box-shadow:
+        3px 5px 0px var(--sky-dark),
+        3px 5px 0px 1px var(--ink),
+        inset 0 2px 0 rgba(255,255,255,0.35);
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+    animation: tile-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Gloss strip */
+.level-btn::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 10px;
+    width: 55%; height: 10px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.45);
+    pointer-events: none;
+}
+
+/* Pop-in stagger — apply animation-delay via JS or nth-child */
+.level-btn:nth-child(1)  { animation-delay: 0.03s; }
+.level-btn:nth-child(2)  { animation-delay: 0.06s; }
+.level-btn:nth-child(3)  { animation-delay: 0.09s; }
+.level-btn:nth-child(4)  { animation-delay: 0.12s; }
+.level-btn:nth-child(5)  { animation-delay: 0.15s; }
+.level-btn:nth-child(6)  { animation-delay: 0.18s; }
+.level-btn:nth-child(7)  { animation-delay: 0.21s; }
+.level-btn:nth-child(8)  { animation-delay: 0.24s; }
+.level-btn:nth-child(9)  { animation-delay: 0.27s; }
+.level-btn:nth-child(10) { animation-delay: 0.30s; }
+.level-btn:nth-child(11) { animation-delay: 0.33s; }
+.level-btn:nth-child(12) { animation-delay: 0.36s; }
+
+@keyframes tile-pop-in {
+    0%   { opacity: 0; transform: scale(0.6) rotate(-6deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Rotate through candy colors by group */
+.level-btn:nth-child(4n+1) { background: var(--sky);    box-shadow: 3px 5px 0px var(--sky-dark),    3px 5px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+2) { background: var(--lime);   box-shadow: 3px 5px 0px var(--lime-dark),   3px 5px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+3) { background: var(--rose);   box-shadow: 3px 5px 0px var(--rose-dark),   3px 5px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+0) { background: var(--violet); box-shadow: 3px 5px 0px var(--violet-dark), 3px 5px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+
+/* Hover — lift */
+.level-btn.active:hover {
+    transform: translate(-1px, -3px) scale(1.06);
+}
+.level-btn:nth-child(4n+1).active:hover { box-shadow: 4px 8px 0px var(--sky-dark),    4px 8px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+2).active:hover { box-shadow: 4px 8px 0px var(--lime-dark),   4px 8px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+3).active:hover { box-shadow: 4px 8px 0px var(--rose-dark),   4px 8px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+.level-btn:nth-child(4n+0).active:hover { box-shadow: 4px 8px 0px var(--violet-dark), 4px 8px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.35); }
+
+/* Press down — candy squish */
+.level-btn:active:not(.locked) {
+    transform: translate(3px, 5px) scale(0.96) !important;
+    box-shadow: 0px 0px 0px var(--ink) !important;
+}
+
+/* ─── Locked State ────────────────────────────────────────────── */
+.level-btn.locked {
+    background: var(--locked-bg) !important;
+    border-color: var(--ink) !important;
+    box-shadow: 3px 5px 0px var(--locked-shadow), 3px 5px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.2) !important;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.level-btn.locked::before {
+    background: rgba(255,255,255,0.25);
+}
+
+.lock-icon {
+    color: var(--ink);
+    opacity: 0.45;
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Active (unlocked, not current) ────────────────────────── */
+.level-btn.active span {
+    color: #fff;
+    font-size: clamp(18px, 5vw, 26px);
+    font-weight: 900;
+    font-family: 'Unbounded', sans-serif;
+    -webkit-text-stroke: 1.5px rgba(0,0,0,0.25);
+    text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+/* ─── Current Level ──────────────────────────────────────────── */
+.level-btn.current {
+    background: var(--orange) !important;
+    border-color: var(--ink) !important;
+    box-shadow:
+        4px 6px 0px var(--orange-dark),
+        4px 6px 0px 1px var(--ink),
+        0 0 0 4px rgba(255,92,26,0.2),
+        inset 0 2px 0 rgba(255,255,255,0.4) !important;
+    transform: scale(1.13) rotate(-2deg);
+    animation: current-wiggle 3s ease-in-out infinite;
+}
+
+.level-btn.current span {
+    color: #fff;
+    font-size: clamp(18px, 5vw, 26px);
+    font-weight: 900;
+    font-family: 'Unbounded', sans-serif;
+    -webkit-text-stroke: 1.5px rgba(0,0,0,0.25);
+    text-shadow: 2px 3px 0 rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes current-wiggle {
+    0%, 100% { transform: scale(1.13) rotate(-2deg); }
+    50%       { transform: scale(1.15) rotate(2deg); }
+}
+
+/* ─── Arrow Buttons ──────────────────────────────────────────── */
+.arrow-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 3px 4px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    color: var(--ink);
+}
+
+.arrow-btn:hover {
+    transform: translate(-1px, -2px);
+    box-shadow: 4px 6px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.arrow-btn:active {
+    transform: translate(3px, 4px);
+    box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* ─── Close Button ───────────────────────────────────────────── */
+.close-btn {
+    margin-top: 28px;
+    padding: 13px 44px;
+    border-radius: 99px;
+    border: 3px solid var(--ink);
+    background: var(--rose);
+    color: #fff;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+
+    box-shadow:
+        4px 6px 0px var(--rose-dark),
+        4px 6px 0px 1px var(--ink),
+        inset 0 2px 0 rgba(255,255,255,0.25);
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* Gloss on close button */
+.close-btn::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 20px;
+    width: 50%; height: 9px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.3);
+    pointer-events: none;
+}
+
+.close-btn:hover {
+    transform: translate(-1px, -2px);
+    box-shadow: 5px 8px 0px var(--rose-dark), 5px 8px 0px 1px var(--ink), inset 0 2px 0 rgba(255,255,255,0.25);
+}
+
+.close-btn:active {
+    transform: translate(4px, 6px);
+    box-shadow: 0px 0px 0px var(--rose-dark), 0px 0px 0px 1px var(--ink);
+}

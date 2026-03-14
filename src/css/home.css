@@ -1,0 +1,404 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@500;700&display=swap');
+
+/* ─── Design: "MOLTEN CANDY" ──────────────────────────────────────
+   Warm cream canvas · ink-dipped letters · sugar-gloss buttons
+   Feels like a premium mobile game from an indie studio in Tokyo
+──────────────────────────────────────────────────────────────── */
+
+:root {
+    --cream:        #fdf6ec;
+    --cream-deep:   #f5e9d3;
+    --ink:          #1a0f00;
+    --orange:       #ff5c1a;
+    --orange-dark:  #c43800;
+    --lime:         #b8f000;
+    --lime-dark:    #7aaa00;
+    --rose:         #ff3d7f;
+    --sky:          #00c3f0;
+    --violet:       #8b5cf6;
+    --gold:         #ffbe00;
+    --btn-radius:   20px;
+    --primary:      #ff5c1a;
+}
+
+/* ─── Container ──────────────────────────────────────────────── */
+.home-container {
+    height: 100vh;
+    background-color: var(--cream);
+    background-image:
+        radial-gradient(ellipse 120% 60% at 50% -5%,  #ffe0b2 0%, transparent 60%),
+        radial-gradient(ellipse 60%  40% at 10% 90%,  #ffd6e8 0%, transparent 55%),
+        radial-gradient(ellipse 50%  35% at 90% 85%,  #d4f5a0 0%, transparent 55%),
+        radial-gradient(ellipse 40%  30% at 80% 10%,  #c8f0ff 0%, transparent 50%);
+    animation: bg-shift 16s ease-in-out infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 0;
+    gap: 2rem;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Grain texture overlay */
+.home-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+/* Floating blob shape */
+.home-container::after {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 62% 38% 70% 30% / 45% 55% 45% 55%;
+    background: linear-gradient(135deg, rgba(255,92,26,0.12), rgba(184,240,0,0.10));
+    bottom: -60px;
+    left: -60px;
+    animation: blob-drift 14s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes bg-shift {
+    0%   { background-size: 100% 100%; }
+    100% { background-size: 115% 115%; }
+}
+
+@keyframes blob-drift {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(40px, -30px) rotate(25deg); }
+}
+
+/* ─── Title ─────────────────────────────────────────────────── */
+.home-title {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.title-word {
+    display: flex;
+    gap: 4px;
+    font-size: 5.8rem;
+    font-weight: 900;
+    font-family: 'Unbounded', sans-serif;
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.title-word span {
+    display: inline-block;
+    position: relative;
+    animation: bounce-letter 2.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    cursor: default;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-text-stroke: 3px var(--ink);
+    text-shadow:
+        4px 6px 0px var(--ink),
+        4px 7px 0px rgba(26,15,0,0.3);
+}
+
+.title-word span:hover {
+    transform: scale(1.3) rotate(-8deg) translateY(-8px) !important;
+    z-index: 10;
+}
+
+/* JUST */
+.just span:nth-child(1) { color: var(--orange);  animation-delay: 0.00s; }
+.just span:nth-child(2) { color: var(--lime);    animation-delay: 0.12s; }
+.just span:nth-child(3) { color: var(--rose);    animation-delay: 0.24s; }
+.just span:nth-child(4) { color: var(--sky);     animation-delay: 0.36s; }
+
+/* SLIDE */
+.slide span:nth-child(1) { color: var(--sky);    animation-delay: 0.48s; }
+.slide span:nth-child(2) { color: var(--violet); animation-delay: 0.60s; }
+.slide span:nth-child(3) { color: var(--gold);   animation-delay: 0.72s; }
+.slide span:nth-child(4) { color: var(--orange); animation-delay: 0.84s; }
+.slide span:nth-child(5) { color: var(--lime);   animation-delay: 0.96s; }
+
+@keyframes bounce-letter {
+    0%, 85%, 100% { transform: translateY(0px) rotate(0deg); }
+    90%            { transform: translateY(-14px) rotate(-3deg); }
+    95%            { transform: translateY(-6px) rotate(2deg); }
+}
+
+/* ─── Controls ──────────────────────────────────────────────── */
+.home-controls {
+    flex: 1;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.side-icons-left,
+.side-icons-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ─── Icon Button — Sugar Candy Press ───────────────────────── */
+.icon-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: var(--btn-radius);
+    background: #ffffff;
+    border: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    cursor: pointer;
+    position: relative;
+    box-shadow:
+        3px 5px 0px var(--ink),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+/* Glossy sheen strip */
+.icon-btn::before {
+    content: '';
+    position: absolute;
+    top: 5px; left: 8px;
+    width: 38px; height: 10px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.55);
+    pointer-events: none;
+}
+
+.icon-btn:hover {
+    background: var(--cream-deep);
+    transform: translate(-1px, -2px);
+    box-shadow: 4px 7px 0px var(--ink), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.icon-btn:active {
+    transform: translate(3px, 5px);
+    box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* ─── Play Button — Giant Candy Orb ────────────────────────── */
+.play-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.play-btn {
+    width: 114px;
+    height: 114px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff7a40 0%, var(--orange) 45%, #d93500 100%);
+    border: 4px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        5px 8px 0px var(--orange-dark),
+        5px 8px 0px 1px var(--ink),
+        0 20px 40px rgba(255,92,26,0.35),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    animation: play-breathe 3.5s ease-in-out infinite;
+}
+
+/* Big gloss highlight */
+.play-btn::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 18px;
+    width: 55px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    transform: rotate(-20deg);
+    pointer-events: none;
+}
+
+/* Subtle inner ring */
+.play-btn::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    pointer-events: none;
+}
+
+.play-btn svg {
+    position: relative;
+    z-index: 1;
+    margin-left: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.play-btn:hover {
+    transform: translate(-2px, -3px);
+    box-shadow:
+        7px 11px 0px var(--orange-dark),
+        7px 11px 0px 1px var(--ink),
+        0 28px 50px rgba(255,92,26,0.45),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+}
+
+.play-btn:active {
+    transform: translate(5px, 8px);
+    box-shadow:
+        0px 0px 0px var(--orange-dark),
+        0px 0px 0px 1px var(--ink),
+        0 6px 16px rgba(255,92,26,0.2),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+    animation: none;
+}
+
+@keyframes play-breathe {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.04); }
+}
+
+/* ─── Play Text ──────────────────────────────────────────────── */
+.play-text {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 55px;
+    font-weight: 900;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.play-text span {
+    position: relative;
+    animation: bounce-letter 2.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    -webkit-text-stroke: 2px var(--ink);
+    text-shadow:
+        3px 4px 0px var(--ink),
+        3px 5px 0px rgba(26,15,0,0.2);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.play-text span:hover {
+    transform: scale(1.2) rotate(5deg) translateY(-5px);
+}
+
+.play-text span:nth-child(1) { color: var(--rose);   animation-delay: 0.1s; }
+.play-text span:nth-child(2) { color: var(--lime);   animation-delay: 0.2s; }
+.play-text span:nth-child(3) { color: var(--sky);    animation-delay: 0.3s; }
+.play-text span:nth-child(4) { color: var(--violet); animation-delay: 0.4s; }
+
+/* ─── Discord ─────────────────────────────────────────────────── */
+.discord-icon {
+    background: #5865f2;
+    color: #fff;
+    box-shadow: 3px 5px 0px #3a44c8, 3px 5px 0px 1px var(--ink), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.discord-icon:hover {
+    background: #6872f3;
+    box-shadow: 4px 7px 0px #3a44c8, 4px 7px 0px 1px var(--ink), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.discord-icon:active {
+    box-shadow: 0px 0px 0px #3a44c8, 0px 0px 0px 1px var(--ink);
+}
+
+/* ─── Responsive Mobile ─────────────────────────────────────── */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 1.5rem 0;
+        gap: 1.2rem;
+    }
+
+    .title-word {
+        font-size: 18vw; /* Scales with screen width */
+        letter-spacing: -3px;
+    }
+
+    .title-word span {
+        -webkit-text-stroke: 1.5px var(--ink);
+        text-shadow: 2.5px 3.5px 0px var(--ink);
+    }
+
+    .play-btn {
+        width: 90px;
+        height: 90px;
+    }
+
+    .play-text {
+        font-size: 36px;
+        gap: 3px;
+    }
+
+    .home-title {
+        margin-top: 2.5rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .home-title {
+        margin-top: 8rem; /* Moves 'JUST SLIDE' lower as requested */
+    }
+}
+
+@media (max-width:360px) {
+    .title-word {
+        font-size: 20vw;
+    }
+}
+
+
+/* ─── Landscape Mobile Responsive ─────────────────────────── */
+@media (max-height: 480px) and (orientation: landscape) {
+    .home-container {
+        padding: 0.5rem 0;
+        gap: 0.8rem;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+    }
+
+    .home-title {
+        margin-top: 0;
+        transform: scale(0.65);
+    }
+
+    .home-controls {
+        padding-bottom: 0;
+        flex: 0;
+        gap: 20px;
+    }
+
+    .play-btn {
+        width: 80px;
+        height: 80px;
+    }
+
+    .play-text {
+        font-size: 30px;
+    }
+}

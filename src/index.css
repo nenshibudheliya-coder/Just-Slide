@@ -1,0 +1,78 @@
+:root {
+  /* Vibrant Liquid Theme */
+  --bg-main: #f0f2f5;
+  --bg-gradient: radial-gradient(circle at 0% 0%, #ff007a 0%, transparent 50%),
+                 radial-gradient(circle at 100% 0%, #00d2ff 0%, transparent 50%),
+                 radial-gradient(circle at 100% 100%, #6c5ce7 0%, transparent 50%),
+                 radial-gradient(circle at 0% 100%, #00ff9f 0%, transparent 50%);
+  
+  --primary: #6c5ce7;
+  --secondary: #ff007a;
+  --accent: #00d2ff;
+  --text-dark: #1a1a2e;
+  --text-dim: #57606f;
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --shadow-premium: 0 20px 40px rgba(0,0,0,0.1);
+
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  color: var(--text-dark);
+  background-color: var(--bg-main);
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
