@@ -3,10 +3,12 @@ import Just from './Components/just.jsx'
 import Home from './Components/Home.jsx'
 import LevelSelect from './Components/LevelSelect.jsx'
 import { LEVELS } from './data/levels.js'
+import AdBanner from './Components/AdBanner.jsx'
 import './App.css'
 
 function App() {
   const [gameState, setGameState] = useState('home'); // 'home', 'levels', 'game'
+  const [showHomeAd, setShowHomeAd] = useState(false);
   const [selectedLevelIdx, setSelectedLevelIdx] = useState(0);
   const [unlockedLevel, setUnlockedLevel] = useState(() => {
     const saved = localStorage.getItem('just_slide_unlocked');
@@ -30,7 +32,26 @@ function App() {
   return (
     <>
       {gameState === 'home' && (
-        <Home onPlay={() => setGameState('levels')} />
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <Home onPlay={() => setShowHomeAd(true)} />
+          {showHomeAd && (
+            <div style={{ 
+              position: 'fixed', 
+              inset: 0, 
+              zIndex: 9999, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              backdropFilter: 'blur(4px)'
+            }}>
+              <AdBanner onClose={() => {
+                setShowHomeAd(false);
+                setGameState('levels');
+              }} />
+            </div>
+          )}
+        </div>
       )}
 
       {gameState === 'levels' && (

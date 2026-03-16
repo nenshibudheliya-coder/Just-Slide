@@ -1,0 +1,192 @@
+.ad-banner-container {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 15px 20px 25px;
+  width: 92%;
+  max-width: 600px;
+  margin: 10px auto;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  border: 4px solid #000;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ad-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 0 10px;
+}
+
+.ad-label {
+  font-size: 15px;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.ad-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.ad-control-btn {
+  background: #fff;
+  border: 2px solid #000; 
+  cursor: pointer;
+  color: #000;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.ad-control-btn:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 #000;
+}
+
+.ad-cards-container {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  padding: 5px 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ad-cards-container::-webkit-scrollbar {
+  display: none;
+}
+
+.ad-card {
+  min-width: 120px;
+  width: 120px;
+  position: relative;
+  cursor: pointer;
+}
+
+.ad-card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: transparent;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ad-card:hover .ad-card-inner {
+  transform: scale(1.08) rotate(3deg);
+  /* box-shadow: 0 15px 35px rgba(0,0,0,0.4); */
+}
+
+.ad-image-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.ad-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ad-title-simple {
+  color: #000;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: 0.2px;
+}
+
+/* Mascot removed */
+.frog-mascot {
+  display: none;
+}
+
+.ad-info-icon-bottom {
+  position: absolute;
+  top: 10px;
+  right: 60px; /* Offset from close button */
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.ad-info-icon-bottom:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments only */
+@media (max-width: 600px) {
+  .ad-banner-container {
+    width: 95%;
+    padding: 10px 10px 15px;
+    border-radius: 12px;
+    border-width: 3px;
+    max-width: 340px; /* Force a more compact look on mobile */
+  }
+  
+  .ad-banner-header {
+    margin-bottom: 15px;
+    padding: 0 5px;
+  }
+
+  .ad-cards-container {
+    gap: 8px;
+    justify-content: center; /* Center cards if they fit */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  
+  .ad-card {
+    min-width: 90px;
+    width: 90px;
+  }
+
+  .ad-label {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .ad-title-simple {
+    font-size: 8px;
+    margin-top: 6px;
+  }
+
+  .ad-control-btn {
+    padding: 3px;
+    border-width: 1.5px;
+  }
+
+  .ad-control-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
